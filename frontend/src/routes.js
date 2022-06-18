@@ -1,19 +1,40 @@
-import ContactList from "./pages/ContactList";
-import { HiHome } from "react-icons/hi";
-import AddNewContact from "./pages/AddNewContact";
+import { HiUserGroup, HiLightningBolt, HiArrowCircleUp, HiArrowCircleDown } from "react-icons/hi";
+import { BsCurrencyBitcoin } from "react-icons/bs";
+import AllContactsPage from "./pages/AllContacts";
 export const routes = [
     {
         title: 'All Contacts',
-        icon: HiHome,
+        icon: HiUserGroup,
         href: '/',
-        component: <ContactList />,
+        component: <AllContactsPage />,
         group: false,
     },
     {
-        title: 'Add new contact',
-        icon: HiHome,
-        href: '/add',
-        component: <AddNewContact />,
+        title: 'Activity',
+        icon: HiLightningBolt,
+        href: '/activity',
+        component: <AllContactsPage />,
+        group: false,
+    },
+    {
+        title: 'Wallet',
+        icon: BsCurrencyBitcoin,
+        href: '/wallet',
+        component: <AllContactsPage />,
+        group: false,
+    },
+    {
+        title: 'Send',
+        icon: HiArrowCircleUp,
+        href: '/send',
+        component: <AllContactsPage />,
+        group: false,
+    },
+    {
+        title: 'Receive',
+        icon: HiArrowCircleDown,
+        href: '/receive',
+        component: <AllContactsPage />,
         group: false,
     }
 ]
