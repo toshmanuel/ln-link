@@ -55,7 +55,7 @@ const App: FC = () => {
             </Sidebar.ItemGroup>
           </Sidebar.Items>
         </Sidebar>
-        <main className="flex-1 overflow-auto p-4" ref={mainRef}>
+        <main className="flex-1 overflow-auto py-6 md:px-20" ref={mainRef}>
           <Suspense
             fallback={
               <div className="flex h-full items-center justify-center">
