@@ -11,6 +11,7 @@ db.authenticate().then(() =>
     .catch(err => console.log(err.message))
 
 db.sync();
+// db.drop()
 app.use(cors())
 app.use(express.json())
 

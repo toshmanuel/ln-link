@@ -11,26 +11,22 @@ const getAddresses = async (req, res) => {
 
 const getAddressById = async (req, res) => {
 
-    await Address.findOne({
-        where: {
-            id: contactId,
-        }
-    }).then((address) => res.status(200).json(address)
+    await Address.findByPk(req.params.id, { include: ["contact"] }).then((address) => res.status(200).json(address)
     ).catch((error) => res.status(400).json({ message: "Address not found" }));
 }
 
 const addAddress = async (req, res) => {
     const contact = await Contact.findByPk(req.body.contactId);
-    
+
     await Address.create({
         contact: contact,
         address: req.body.address,
         label: req.body.label,
-    }, {
-        include: [Contact]
-    }).then(address => {res.status(201).json(address)});
+        contactId: req.body.contactId
+    },
+    ).then(address => { res.status(201).json(address) });
 
-    
+
 }
 
 const deleteContact = async (req, res) => {

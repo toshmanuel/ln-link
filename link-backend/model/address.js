@@ -1,16 +1,17 @@
 const Sequelize = require('sequelize');
 const db = require('../config/db');
-const Contact = require('./contact');
 
 
-const address = db.define('addresses', {
+class Address extends Sequelize.Model {}
+Address.init({
     address: {
         type: Sequelize.STRING,
         allowNull: false,
         unique: true
     },
     label: { type: Sequelize.STRING}
-    
-}, {freezeTableName: true})
-address.belongsTo(Contact)
-module.exports = address
+}, {
+    modelName: "address",
+    sequelize: db,
+})
+module.exports = Address

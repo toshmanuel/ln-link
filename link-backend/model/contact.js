@@ -1,14 +1,19 @@
 const Sequelize = require('sequelize');
 const db = require('../config/db');
+const Address = require('./address');
 
-
-const contact = db.define('contacts', {
+class Contact extends Sequelize.Model {}
+Contact.init({
     name: {
         type: Sequelize.STRING,
         allowNull: false,
         unique: true
     },
+}, {
+    modelName: "contact",
+    sequelize: db,
+})
 
-}, { freezeTableName: true })
-
-module.exports = contact
+Contact.hasMany(Address)
+Address.belongsTo(Contact)
+module.exports = Contact
