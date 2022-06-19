@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const db = require('../config/db');
 const Address = require('./address');
 
-class Contact extends Sequelize.Model {}
+class Contact extends Sequelize.Model { }
 Contact.init({
     name: {
         type: Sequelize.STRING,
@@ -14,6 +14,9 @@ Contact.init({
     sequelize: db,
 })
 
-Contact.hasMany(Address)
+Contact.hasMany(Address, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
+})
 Address.belongsTo(Contact)
 module.exports = Contact
