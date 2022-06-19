@@ -1,0 +1,35 @@
+{
+  "name": "ln-link",
+  "version": "1.0.0",
+  "description": "this is the server side of ln-link",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/toshmanuel/ln-link.git"
+  },
+  "keywords": [
+    "lightning",
+    "bitcoin",
+    "contact",
+    "invoice"
+  ],
+  "author": "Rukundo and Dimeji",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/toshmanuel/ln-link/issues"
+  },
+  "homepage": "https://github.com/toshmanuel/ln-link#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "mysql2": "^2.3.3",
+    "pg": "^8.7.3",
+    "sequelize": "^6.21.0"
+  }
+}
