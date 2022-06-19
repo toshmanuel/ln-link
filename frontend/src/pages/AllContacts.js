@@ -45,11 +45,11 @@ function AllContactsPage() {
 
     return (
         <section>
-            <div className="flex justify-between px-4 pt-4">
+            <div className="flex justify-between px-4 pt-4 mb-5">
                 <h2 className="mb-4 text-2xl font-bold text-gray-900 dark:text-white lg:text-4xl lg:font-extrabold lg:leading-snug 2xl:px-48">All Contacts</h2>
                 <React.Fragment>
                     <Button onClick={() => setOpenModal('default')}>
-                    <BsPlusCircle className="h-5 w-5 mr-3 text-white" /> Add new contact
+                    <BsPlusCircle className="h-5 w-5 mr-3 text-white" /> Add new
                     </Button>
                     <Modal show={openModal === 'default'} onClose={() => setOpenModal(undefined)}>
                         <Modal.Header />

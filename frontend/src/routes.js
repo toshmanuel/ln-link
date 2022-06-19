@@ -24,14 +24,14 @@ export const routes = [
         group: false,
     },
     {
-        title: 'Send',
+        title: 'Send Payment',
         icon: HiArrowCircleUp,
         href: '/send',
         component: <AllContactsPage />,
         group: false,
     },
     {
-        title: 'Receive',
+        title: 'Request Payment',
         icon: HiArrowCircleDown,
         href: '/receive',
         component: <AllContactsPage />,
