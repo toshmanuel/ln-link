@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Spinner, Button, Modal, Accordion } from 'flowbite-react';
-import { HiArrowCircleUp, HiArrowCircleDown, HiPlusCircle } from 'react-icons/hi';
+import { HiArrowCircleUp, HiLightningBolt, HiPlusCircle, HiPencilAlt } from 'react-icons/hi';
 import CreateAddressForm from '../components/forms/CreateAddressForm';
 
 function ContactDetailsPage() {
@@ -77,11 +77,11 @@ function ContactDetailsPage() {
                 <Button.Group outline={true}>
                     <Button gradientDuoTone="cyanToBlue">
                         <HiArrowCircleUp className="mr-3 h-4 w-4" />
-                        {' '}Send
+                        {' '}Pay
                     </Button>
                     <Button gradientDuoTone="cyanToBlue">
-                        <HiArrowCircleDown className="mr-3 h-4 w-4" />
-                        {' '}Receive
+                        <HiPencilAlt className="mr-3 h-4 w-4" />
+                        {' '}Edit contact
                     </Button>
                 </Button.Group>
             </div>
@@ -106,14 +106,24 @@ function ContactDetailsPage() {
             {sortedAddresses.map(address => (
                 <Accordion.Panel>
                 <Accordion.Title>
-                {address.label}
+                <h4 className='mr-4'>{address.label}</h4>
                 </Accordion.Title>
                 <Accordion.Content>
-                <p className="mb-2 text-gray-500 dark:text-gray-400 break-all">{address.address}</p>
+                <div className="flex justify-between">
+                    <p className="mb-2 text-gray-500 dark:text-gray-400 break-all">{address.address}</p>
+                    <Link to={`/invoices/?addressId=${address.id}`}>
+                        <Button size="xs">
+                            <HiLightningBolt className="h-5 w-5 mr-2 text-white" /> Pay
+                        </Button>
+                    </Link>
+                </div>
                 </Accordion.Content>
             </Accordion.Panel>
             ))}
         </Accordion>
+        </div>
+        <div className="flex justify-between px-4 pt-4 mb-5">
+            <h3 className="mb-4 text-3xl font-bold text-gray-900 dark:text-white lg:leading-snug">Transactions</h3>
         </div>
         </div>
         </>

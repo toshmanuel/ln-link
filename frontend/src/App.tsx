@@ -21,7 +21,7 @@ const App: FC = () => {
             onClick={() => setCollapsed(!collapsed)}
           />
           <HiLightningBolt className="h-7 w-7 mr-4 text-yellow-300" />
-          <span className="text-xl font-semibold dark:text-white">Lightning Contacts</span>
+          <span className="text-xl font-semibold dark:text-white">LINK: Lightning Contacts</span>
         </div>
         <div className="flex items-center gap-2">
           <a

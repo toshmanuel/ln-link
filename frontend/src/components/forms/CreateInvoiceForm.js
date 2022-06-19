@@ -3,9 +3,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Spinner, Button, TextInput } from 'flowbite-react';
 const Swal = require("sweetalert2");
 
-const CreateAddressForm = (props) => {
-  const labelInputRef = React.createRef();
-  const addressInputRef = React.createRef();
+const CreateInvoiceForm = (props) => {
+  const amountInputRef = React.createRef();
+  const descInputRef = React.createRef();
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -13,19 +13,19 @@ const CreateAddressForm = (props) => {
 
   const params = useParams();
 
-  async function createAddressHandler(event) {
+  async function createInvoiceHandler(event) {
     event.preventDefault();
 
-    const enteredLabel = labelInputRef.current.value;
-    const enteredAddress = addressInputRef.current.value;
+    const enteredAmount = amountInputRef.current.value;
+    const enteredDescription = descInputRef.current.value;
 
     setIsLoading(true);
-    fetch("http://localhost:5000/api/v1/addresses", {
+    fetch("http://localhost:5000/api/v1/invoices", {
       method: "POST",
       body: JSON.stringify({
-        label: enteredLabel,
-        address: enteredAddress,
-        contactId: params.contactId
+        amount: enteredAmount,
+        description: enteredDescription,
+        addressId: params.addressId
       }),
       headers: {
         "Content-Type": "application/json"
@@ -51,8 +51,8 @@ const CreateAddressForm = (props) => {
             timer: 5000,
           });
           setIsLoading(false);
+          navigate.replace("/");
         }, 2000);
-        navigate("/contacts/" + params.contactId);
       })
       .catch((err) => {
         setIsLoading(false);
@@ -66,20 +66,25 @@ const CreateAddressForm = (props) => {
       });
   }
   return (
-    <form className="flex flex-col gap-4" onSubmit={createAddressHandler}>
+    <form className="flex flex-col gap-4" onSubmit={createInvoiceHandler}>
   <div>
     <TextInput
-      id="label"
-      type="text"
-      placeholder="Add a label for this address"
+      id="amount"
+      type="number"
+      placeholder="Enter amount"
       required={true}
-      ref={labelInputRef}
+      ref={amountInputRef}
+    />
+    <TextInput
+      id="description"
+      type="text"
+      placeholder="Add optional message"
+      required={false}
+      ref={descInputRef}
+      sizing="lg"
     />
     </div>
-    <div className="mt-2">
-  <textarea className="w-full border border-gray-300 rounded-sm px-4 py-3 outline-none transition-colors duration-150 ease-in-out focus:border-blue-400" rows="4" required id="address" ref={addressInputRef} placeholder="Paste address here" />
-  </div>
-  {!isLoading && <Button type="submit">Save</Button>}
+  {!isLoading && <Button type="submit">Create invoice</Button>}
   {isLoading && (
      <div className="text-center">
         <Spinner aria-label="Saving address ..." />
@@ -89,4 +94,4 @@ const CreateAddressForm = (props) => {
   );
 };
 
-export default CreateAddressForm;
+export default CreateInvoiceForm;
