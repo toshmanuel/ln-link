@@ -1,12 +1,19 @@
 import { HiUserGroup, HiLightningBolt, HiArrowCircleUp, HiArrowCircleDown } from "react-icons/hi";
 import { BsCurrencyBitcoin } from "react-icons/bs";
 import AllContactsPage from "./pages/AllContacts";
+import ContactDetailsPage from "./pages/ContactDetails";
 export const routes = [
     {
         title: 'All Contacts',
         icon: HiUserGroup,
         href: '/',
         component: <AllContactsPage />,
+        group: false,
+    },
+    {
+        title: '',
+        href: '/contacts/:contactId',
+        component: <ContactDetailsPage />,
         group: false,
     },
     {

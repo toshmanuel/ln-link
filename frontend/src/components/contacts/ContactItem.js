@@ -1,19 +1,21 @@
-import { Card, Avatar, Button } from 'flowbite-react';
+import { Card, Avatar } from 'flowbite-react';
+import { Link } from "react-router-dom";
 import { HiArrowCircleUp, HiArrowCircleDown } from 'react-icons/hi';
 
 function ContactItem(props) {
 
     return (
-        <li>
+        <li className='mb-5'>
+        <Link to={`/contacts/${props.id}`}>
             <Card>
                 <div className="flex justify-between">
                     <Avatar
-                        img={props.image}
+                        img="https://source.boringavatars.com/marble/120/1337_user?colors=264653,2a9d8f,e9c46a,f4a261,e76f51"
                         rounded={true}
                         >
                         <div className="space-y-1 font-medium dark:text-white">
                             <div>
-                            {props.title}
+                            {props.name}
                             </div>
                             <div className="text-sm text-gray-500 dark:text-gray-400">
                             # addresses
@@ -26,6 +28,7 @@ function ContactItem(props) {
                     </div>
                 </div>
             </Card>
+        </Link>
         </li>
     )
 }

@@ -1,9 +1,14 @@
 import ContactItem from './ContactItem';
 
 function ContactList(props) {
+
+    const sortedContacts = props.contacts.sort((a, b) => {
+        return new Date(a.date).getTime() - new Date(b.date).getTime()
+    }).reverse();
+    
     return (
         <ul>
-            {props.contacts.map(contact => (
+            {sortedContacts.map(contact => (
                 <ContactItem
                     key={contact.id}
                     id={contact.id}

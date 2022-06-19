@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Spinner, Button, Modal, TextInput } from 'flowbite-react';
+import { Spinner, Button, Modal, Alert } from 'flowbite-react';
 import ContactList from '../components/contacts/ContactList';
 import { BsPlusCircle } from 'react-icons/bs';
+import { HiInformationCircle } from 'react-icons/hi';
+import CreateContactForm from '../components/forms/CreateContactForm';
 
 function AllContactsPage() {
     const [isLoading, setIsLoading] = useState(true);
@@ -11,7 +13,7 @@ function AllContactsPage() {
     useEffect(() => {
         setIsLoading(true);
         // by default fetch is a GET request
-        fetch('https://react-course-bdb27-default-rtdb.firebaseio.com/meetups.json'
+        fetch('http://localhost:5000/api/v1/contacts'
         )
             .then(response => {
                 return response.json();
@@ -38,7 +40,7 @@ function AllContactsPage() {
     if (isLoading) {
         return (
             <div className="text-center">
-                <Spinner aria-label="Center-aligned spinner example" />
+                <Spinner aria-label="Checking..." />
             </div>
         )
     }
@@ -52,32 +54,29 @@ function AllContactsPage() {
                     <BsPlusCircle className="h-5 w-5 mr-3 text-white" /> Add new
                     </Button>
                     <Modal show={openModal === 'default'} onClose={() => setOpenModal(undefined)}>
-                        <Modal.Header />
+                        <Modal.Header>Add contact</Modal.Header>
                         <Modal.Body>
-                        <div className="space-y-6 px-6 pb-4 sm:pb-6 lg:px-8 xl:pb-8">
-                            <h3 className="text-xl font-medium text-gray-900 dark:text-white">
-                            Let's start with their name
-                            </h3>
-                            <div>
-                            <TextInput
-                                id="name"
-                                className="dark:border-gray-500 dark:bg-gray-600"
-                                placeholder="Satoshi Nakamoto"
-                                required={true}
-                            />
-                            </div>
-
-                            <div className="w-full">
-                            <Button onClick={() => setOpenModal(undefined)}>
-                                Create contact
-                            </Button>
-                            </div>
-                        </div>
+                            <CreateContactForm />
                         </Modal.Body>
                     </Modal>
                 </React.Fragment>
             </div>
-            <ContactList contacts={loadedContacts} />
+            {loadedContacts ? (<ContactList contacts={loadedContacts} />) : (
+                <Alert
+                color="info"
+                additionalContent={
+                <React.Fragment>
+                    <div className="mt-2 mb-4 text-sm text-blue-700 dark:text-blue-800">
+                        Send and receive easily, and keep your contacts and payments organized. 
+                    </div>
+                </React.Fragment>}
+                icon={HiInformationCircle}
+              >
+                <h3 className="text-xl font-medium text-blue-700 dark:text-blue-800">
+                  Add your first contact
+                </h3>
+              </Alert>
+            )}
         </section>
     );
 }
