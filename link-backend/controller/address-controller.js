@@ -4,7 +4,7 @@ const Contact = require('../model/contact')
 
 const getAddresses = async (req, res) => {
     await Address.findAll({
-        where: { contactId: req.query.contactId}
+        where: { contactId: req.query.contactId }
     }).then(addresses => res.status(200).json(addresses))
         .catch(err => res.status(400).json({ message: "No address present for this contact at the momemt" }))
 }
@@ -16,30 +16,35 @@ const getAddressById = async (req, res) => {
 }
 
 const addAddress = async (req, res) => {
-    const contact = await Contact.findByPk(req.body.contactId);
-
-    await Address.create({
-        contact: contact,
-        address: req.body.address,
-        label: req.body.label,
-        contactId: req.body.contactId
-    },
-    ).then(address => { res.status(201).json(address) });
-
-
+    await Contact.findByPk(req.body.contactId).then(
+        contact => {
+            const address = Address.create({
+                contact: contact,
+                address: req.body.address,
+                label: req.body.label,
+                contactId: req.body.contactId
+            },
+            );
+            res.status(201).json(address);
+        }
+    ).catch(err => {
+        res.status(400).json(err.message);
+    });
 }
 
-const deleteContact = async (req, res) => {
-    const contactId = req.params.id;
-
-    const contact = await Contact.findOne({
-        where: { id: contactId }
-    })
-    const deleteContact = await contact.destroy();
-
-    res.status(204).json(deleteContact);
+const deleteAddress = async (req, res) => {
+    await Address.findByPk(req.params.id).then(
+        address => {
+            address.destroy();
+            res.status(204).json({
+                message: "Deleted successfully"
+            })
+        }
+    ).catch(() => res.status(404).json({
+        error: "Couldn't delete address"
+    }))
 }
 
 module.exports = {
-    getAddresses, getAddressById, addAddress
+    getAddresses, getAddressById, addAddress, deleteAddress
 }

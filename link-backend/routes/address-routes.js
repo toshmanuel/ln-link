@@ -5,6 +5,6 @@ const router = Router()
 router.get('/contact/*', controller.getAddresses)
 router.post('/', controller.addAddress)
 router.get('/:id', controller.getAddressById)
-// router.delete('/:id', controller.deleteContact)
+router.delete('/:id', controller.deleteAddress)
 
 module.exports = router
