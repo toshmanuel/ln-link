@@ -4,7 +4,7 @@ const Contact = require('../model/contact')
 
 const getAddresses = async (req, res) => {
     await Address.findAll({
-        where: { contact: req.params.contact }
+        where: { contactId: req.query.contactId}
     }).then(addresses => res.status(200).json(addresses))
         .catch(err => res.status(400).json({ message: "No address present for this contact at the momemt" }))
 }
@@ -41,5 +41,5 @@ const deleteContact = async (req, res) => {
 }
 
 module.exports = {
-    getAddresses, getAddressById, addAddress, deleteContact
+    getAddresses, getAddressById, addAddress
 }
