@@ -1,31 +1,52 @@
 const db = require('../config/db')
-const Contact = require('../model/contact')
+const Address = require('../model/address')
+const Invoice = require('../model/invoice')
 
-const getContacts = async (req, res) => {
-    const contacts = await Contact.findAll()
-
-    res.status(200).json(contacts)
+const getInvoices = async (req, res) => {
+    await Invoice.findAll({
+        where: { addressId: req.query.addressId }
+    }).then(invoices => res.status(200).json(invoices))
+        .catch(err => res.status(400).json({ message: "No invoice present for this address at the momemt" }))
 }
 
-const getContactById = async (req, res) => {
-    const contactId = req.params.id;
-    const contact = await Contact.findOne({
-        where: {
-            id: contactId,
+const getInvoiceById = async (req, res) => {
+
+    await Invoice.findByPk(req.params.id, { include: ["address"] })
+        .then((invoice) => res.status(200).json(invoice))
+        .catch((error) => res.status(400).json({ message: "invoice not found" }));
+}
+
+const addInvoice = async (req, res) => {
+    await Address.findByPk(req.body.contactId)
+        .then(
+            address => {
+                const invoice = Invoice.create({
+                    amount: req.body.amount,
+                    recipient: req.body.recipient,
+                    description: req.body.description,
+                    addressId: req.body.addressId,
+                },
+                );
+                res.status(201).json(invoice);
+            }
+        ).catch(err => {
+            res.status(400).json(err.message);
+        });
+}
+
+const deleteInvoice = async (req, res) => {
+    await Invoice.findByPk(req.params.id).then(
+        invoice => {
+            invoice.destroy();
+            res.status(204).json({
+                message: "Deleted successfully"
+            })
         }
-    });
-
-    res.status(200).json(contact);
-}
-
-const addContact = async (req, res) => {
-    const contact = await Contact.create({
-        name: req.body.name
-    });
-
-    res.status(200).json(contact);
+    ).catch(() => res.status(404).json({
+        error: "Couldn't delete invoice"
+    }))
 }
 
 module.exports = {
-    getContacts, getContactById, addContact,
+    getInvoices, getInvoiceById, addInvoice, deleteInvoice
 }

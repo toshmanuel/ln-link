@@ -19,10 +19,9 @@ const addAddress = async (req, res) => {
     await Contact.findByPk(req.body.contactId).then(
         contact => {
             const address = Address.create({
-                contact: contact,
                 address: req.body.address,
                 label: req.body.label,
-                contactId: req.body.contactId
+                contactId: contact.id
             },
             );
             res.status(201).json(address);

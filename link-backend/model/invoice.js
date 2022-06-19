@@ -2,12 +2,31 @@ const Sequelize = require('sequelize');
 const db = require('../config/db');
 
 
-const invoice = db.define('invoices', {
-    name: {
+class Invoice extends Sequelize.Model {}
+Invoice.init({
+    amount: {
+        type: Sequelize.DOUBLE,
+        allowNull: false,
+    },
+    recipient: {
+        type: Sequelize.STRING,
+        allowNull: false,
+    },
+    description: {
         type: Sequelize.STRING,
     },
-    
-}, {freezeTableName: true})
-invoice.sync()
+    status: {
+        type: Sequelize.BOOLEAN,
+        default: false,
+    },
+    lighningInvoiceHash: {
+        type: Sequelize.STRING,
+        default: false,
+    },
 
-module.exports = invoice
+    
+}, {
+    modelName: "invoice",
+    sequelize: db,
+})
+module.exports = Invoice
