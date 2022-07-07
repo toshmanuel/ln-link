@@ -10,7 +10,11 @@ Address.init({
         allowNull: false,
         unique: true
     },
-    label: { type: Sequelize.STRING}
+    label: { type: Sequelize.STRING},
+    address_type: {
+        type: Sequelize.STRING,
+        allowNull: false,
+    },
 }, {
     modelName: "address",
     sequelize: db,

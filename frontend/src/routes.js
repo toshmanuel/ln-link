@@ -2,7 +2,7 @@ import { HiUserGroup, HiLightningBolt, HiArrowCircleUp } from "react-icons/hi";
 import { BsCurrencyBitcoin } from "react-icons/bs";
 import AllContactsPage from "./pages/AllContacts";
 import ContactDetailsPage from "./pages/ContactDetails";
-import NewInvoicePage from "./pages/NewInvoice";
+import AddressDetailsPage from "./pages/AddressDetails";
 export const routes = [
     {
         title: 'All Contacts',
@@ -40,8 +40,8 @@ export const routes = [
     },
     {
         title: '',
-        href: '/invoices/?addressId=*',
-        component: <NewInvoicePage />,
+        href: '/contacts/:contactId/addresses/:addressId',
+        component: <AddressDetailsPage />,
         group: false,
     },
 ]

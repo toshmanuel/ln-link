@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Spinner, Button, TextInput } from 'flowbite-react';
+import { Spinner, Button, TextInput, Label, Select } from 'flowbite-react';
+import { addressOptions } from "../addresses/identifiers";
+import { parseIdentifier } from "../../libs/validator";
 const Swal = require("sweetalert2");
 
 const CreateAddressForm = (props) => {
@@ -8,10 +10,16 @@ const CreateAddressForm = (props) => {
   const addressInputRef = React.createRef();
 
   const [isLoading, setIsLoading] = useState(false);
+  const [addressType, setAddressType] = useState();
 
   const navigate = useNavigate();
 
   const params = useParams();
+
+  const handleIdentifierInput = () => {
+    const enteredAddress = addressInputRef.current.value;
+    parseIdentifier(enteredAddress);
+  }
 
   async function createAddressHandler(event) {
     event.preventDefault();
@@ -51,8 +59,8 @@ const CreateAddressForm = (props) => {
             timer: 5000,
           });
           setIsLoading(false);
+          navigate("/contacts/" + params.contactId, { replace: true });
         }, 2000);
-        navigate("/contacts/" + params.contactId);
       })
       .catch((err) => {
         setIsLoading(false);
@@ -67,6 +75,23 @@ const CreateAddressForm = (props) => {
   }
   return (
     <form className="flex flex-col gap-4" onSubmit={createAddressHandler}>
+      <div id="select">
+  <div className="mb-2 block">
+    <Label
+      htmlFor="identifiers"
+      value="Select address type"
+    />
+  </div>
+  <Select id="identifiers" required={true} defaultValue="Select type" onChange={(e) => setAddressType(e.target.value)}>
+    {addressOptions.map(option => {
+      return (
+        <option key={option.value}>
+        {option.label}
+      </option>
+      )
+    })}
+  </Select>
+</div>
   <div>
     <TextInput
       id="label"
@@ -77,7 +102,11 @@ const CreateAddressForm = (props) => {
     />
     </div>
     <div className="mt-2">
-  <textarea className="w-full border border-gray-300 rounded-sm px-4 py-3 outline-none transition-colors duration-150 ease-in-out focus:border-blue-400" rows="4" required id="address" ref={addressInputRef} placeholder="Paste address here" />
+  <textarea onChange={handleIdentifierInput} className="w-full border border-gray-300 rounded-sm px-4 py-3 outline-none transition-colors duration-150 ease-in-out focus:border-blue-400" 
+  rows="4" required 
+  id="address" 
+  ref={addressInputRef} 
+  placeholder={`Paste ${addressType} here`} />
   </div>
   {!isLoading && <Button type="submit">Save</Button>}
   {isLoading && (

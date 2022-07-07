@@ -21,6 +21,7 @@ const addAddress = async (req, res) => {
             const address = Address.create({
                 address: req.body.address,
                 label: req.body.label,
+                address_type: req.body.address_type,
                 contactId: contact.id
             },
             );

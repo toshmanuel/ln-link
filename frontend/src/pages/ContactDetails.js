@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from "react-router-dom";
-import { Spinner, Button, Modal, Accordion } from 'flowbite-react';
-import { HiArrowCircleUp, HiLightningBolt, HiPlusCircle, HiPencilAlt } from 'react-icons/hi';
+import { Spinner, Button, Modal } from 'flowbite-react';
+import { HiArrowCircleUp, HiPlusCircle, HiPencilAlt, HiArrowCircleRight } from 'react-icons/hi';
 import CreateAddressForm from '../components/forms/CreateAddressForm';
 
 function ContactDetailsPage() {
@@ -26,7 +26,7 @@ function ContactDetailsPage() {
                 console.log(data);
                 setIsLoading(false);
                 });
-    }, []);
+    }, [params.contactId,]);
 
     // get contact's addresses
     useEffect(() => {
@@ -55,7 +55,7 @@ function ContactDetailsPage() {
                 setLoadedAddresses(addresses);
 
             });
-    }, []);
+    }, [params.contactId,]);
 
     const sortedAddresses = loadedAddresses.sort((a, b) => {
         return new Date(a.date).getTime() - new Date(b.date).getTime()
@@ -71,9 +71,9 @@ function ContactDetailsPage() {
 
     return (
             <>
-            <div className="flex justify-between px-4 pt-4 mb-5">
+            <div className="flex justify-between pt-4 mb-5">
             <h2 className="mb-4 text-2xl font-bold text-gray-900 dark:text-white lg:text-4xl lg:font-extrabold lg:leading-snug 2xl:px-48">{contactData.name}</h2>
-            <div className="flex justify-between px-4 pt-4 mb-5">
+            <div className="flex justify-between pt-4 mb-5">
                 <Button.Group outline={true}>
                     <Button gradientDuoTone="cyanToBlue">
                         <HiArrowCircleUp className="mr-3 h-4 w-4" />
@@ -87,7 +87,7 @@ function ContactDetailsPage() {
             </div>
         </div>
         <div>
-        <div className="flex justify-between px-4 pt-4 mb-5">
+        <div className="flex justify-between pt-4 mb-5">
             <h3 className="mb-4 text-3xl font-bold text-gray-900 dark:text-white lg:leading-snug">Addresses</h3>
             <React.Fragment>
                 <Button size="sm" onClick={() => setOpenModal('default')}>
@@ -102,28 +102,39 @@ function ContactDetailsPage() {
             </React.Fragment>
         </div>
         <div className="mt-5">
-        <Accordion flush={true}>
-            {sortedAddresses.map(address => (
-                <Accordion.Panel>
-                <Accordion.Title>
-                <h4 className='mr-4'>{address.label}</h4>
-                </Accordion.Title>
-                <Accordion.Content>
-                <div className="flex justify-between">
-                    <p className="mb-2 text-gray-500 dark:text-gray-400 break-all">{address.address}</p>
-                    <Link to={`/invoices/?addressId=${address.id}`}>
-                        <Button size="xs">
-                            <HiLightningBolt className="h-5 w-5 mr-2 text-white" /> Pay
-                        </Button>
-                    </Link>
+        <ul className="divide-y divide-gray-200 dark:divide-gray-700">
+        {sortedAddresses.map(address => (
+            <li className="py-3 sm:py-4">
+            <Link to={`/contacts/${contactData.id}/addresses/${address.id}`}>
+                <div className="flex items-center space-x-4">
+                    <div className="shrink-0">
+                    <img
+                        className="h-8 w-8 rounded-full"
+                        src="https://flowbite.com/docs/images/people/profile-picture-1.jpg"
+                        alt="Neil"
+                    />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                    <p className="truncate text-sm font-medium text-gray-900 dark:text-white">
+                        {address.label}
+                    </p>
+                    <p className="truncate text-sm text-gray-500 dark:text-gray-400">
+                        {address.address}
+                    </p>
+                    </div>
+                    <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                        <Link to={`/contacts/${contactData.id}/addresses/${address.id}`}>
+                            <HiArrowCircleRight className="h-8 w-8" />
+                        </Link>
+                    </div>
                 </div>
-                </Accordion.Content>
-            </Accordion.Panel>
-            ))}
-        </Accordion>
+            </Link>
+            </li>
+        ))}
+        </ul>
         </div>
-        <div className="flex justify-between px-4 pt-4 mb-5">
-            <h3 className="mb-4 text-3xl font-bold text-gray-900 dark:text-white lg:leading-snug">Transactions</h3>
+        <div className="flex justify-between pt-4 mb-5">
+            <h3 className="mb-4 text-3xl font-bold text-gray-900 dark:text-white lg:leading-snug">All Transactions</h3>
         </div>
         </div>
         </>

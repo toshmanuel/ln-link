@@ -15,14 +15,16 @@ const App: FC = () => {
   return (
     <div className="flex h-screen w-full flex-col overflow-hidden">
       <Navbar className="border-b" fluid>
-        <div className="flex items-center">
-          <HiMenuAlt1
-            className="mr-6 h-6 w-6 cursor-pointer text-gray-600 dark:text-gray-400"
-            onClick={() => setCollapsed(!collapsed)}
-          />
-          <HiLightningBolt className="h-7 w-7 mr-4 text-yellow-300" />
-          <span className="text-xl font-semibold dark:text-white">LINK: Lightning Contacts</span>
-        </div>
+        <Link to="/">
+          <div className="flex items-center">
+            <HiMenuAlt1
+              className="mr-6 h-6 w-6 cursor-pointer text-gray-600 dark:text-gray-400"
+              onClick={() => setCollapsed(!collapsed)}
+            />
+            <HiLightningBolt className="h-7 w-7 mr-4 text-yellow-300" />
+            <span className="text-xl font-semibold dark:text-white">LINK: Lightning Contacts</span>
+          </div>
+        </Link>
         <div className="flex items-center gap-2">
           <a
             className="cursor-pointer rounded-lg p-2.5 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-700"
